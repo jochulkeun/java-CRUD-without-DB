@@ -4,7 +4,7 @@ public class Article {
 
 	public int id;
 	public String title;
-	String body;
+	public String body;
 
 	public Article(int id, String title, String body) {
 		this.id = id;
@@ -16,5 +16,6 @@ public class Article {
 	public String toString() {
 		return "Article [id=" + id + ", title=" + title + ", body=" + body + "]";
 	}
+
 
 }

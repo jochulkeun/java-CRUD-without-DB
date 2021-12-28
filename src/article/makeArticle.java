@@ -13,7 +13,8 @@ public class makeArticle {
 		List<Article> articles = new ArrayList<>();
 
 		Scanner sc = new Scanner(System.in);
-		int id = 0;
+
+		int lastArticleId = 0;
 
 		while (true) {
 			String command;
@@ -21,21 +22,21 @@ public class makeArticle {
 			command = sc.nextLine();
 
 			if (command.equals("article write")) {
-
+				int id = lastArticleId + 1;
+				lastArticleId = id;
 				String title;
 				String body;
 				System.out.print("제목을 입력해 주세요 :");
 				title = sc.nextLine().trim();
 				System.out.print("내용을 입력해 주세요 :");
 				body = sc.nextLine().trim();
-				id++;
-				System.out.printf("%d번글이 생성 되었습니다.\n", id);
 
 				Article article = new Article(id, title, body);
 
 				System.out.println(article);
 				articles.add(article);
 
+				System.out.printf("%d번글이 생성 되었습니다.\n", id);
 			}
 			if (command.equals("article list")) {
 				if (articles.size() == 0) {
@@ -46,6 +47,29 @@ public class makeArticle {
 					Article article = articles.get(i);
 
 					System.out.printf("%d    |  %s\n", article.id, article.title);
+				}
+
+			}
+			if (command.startsWith("article detail ")) {
+
+				String[] commandBits = command.split(" ");
+
+				int id = Integer.parseInt(commandBits[2]);
+
+				Article foundArticle = null;
+
+				for (int i = 0; i <= articles.size() - 1; i++) {
+					Article article = articles.get(i);
+					if (article.id == id) {
+						foundArticle = article;
+					}
+				}
+				if (foundArticle == null) {
+					System.out.println("해당글은 존재하지 않습니다.");
+				} else {
+					System.out.printf("번호 : %s \n", foundArticle.id);
+					System.out.printf("제목 : %s \n", foundArticle.title);
+					System.out.printf("내용 : %s \n", foundArticle.body);
 				}
 			}
 		}
