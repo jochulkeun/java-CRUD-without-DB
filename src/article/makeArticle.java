@@ -58,7 +58,7 @@ public class makeArticle {
 
 				Article foundArticle = null;
 
-				for (int i = 0; i <= articles.size() - 1; i++) {
+				for (int i = 0; i < articles.size() ; i++) {
 					Article article = articles.get(i);
 					if (article.id == id) {
 						foundArticle = article;
@@ -71,6 +71,30 @@ public class makeArticle {
 					System.out.printf("제목 : %s \n", foundArticle.title);
 					System.out.printf("내용 : %s \n", foundArticle.body);
 				}
+			}
+			if (command.startsWith("article delete ")) {
+
+				String[] commandBits = command.split(" ");
+
+				int id = Integer.parseInt(commandBits[2]);
+
+				Article foundIndex = null;
+
+				for (int i = 0; i < articles.size()  ; i++) {
+					Article article = articles.get(i);
+
+					if (article.id == id) {
+
+						foundIndex = article;
+						articles.remove(foundIndex);
+						System.out.printf("%d 번 글은 삭제되었습니다.\n",id);
+						break;
+					}
+				}
+				if (foundIndex == null) {
+					System.out.println("해당글은 존재하지 않습니다.");
+					continue;
+				} 
 			}
 		}
 	}
