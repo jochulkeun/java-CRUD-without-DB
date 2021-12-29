@@ -32,7 +32,7 @@ public class makeArticle {
 				System.out.print("내용을 입력해 주세요 :");
 				body = sc.nextLine().trim();
 
-				Article article = new Article(id, title, body,regDate);
+				Article article = new Article(id, title, body, regDate);
 
 				System.out.println(article);
 				articles.add(article);
@@ -59,7 +59,7 @@ public class makeArticle {
 
 				Article foundArticle = null;
 
-				for (int i = 0; i < articles.size() ; i++) {
+				for (int i = 0; i < articles.size(); i++) {
 					Article article = articles.get(i);
 					if (article.id == id) {
 						foundArticle = article;
@@ -82,21 +82,51 @@ public class makeArticle {
 
 				Article foundIndex = null;
 
-				for (int i = 0; i < articles.size()  ; i++) {
+				for (int i = 0; i < articles.size(); i++) {
 					Article article = articles.get(i);
 
 					if (article.id == id) {
 
 						foundIndex = article;
 						articles.remove(foundIndex);
-						System.out.printf("%d 번 글은 삭제되었습니다.\n",id);
+						System.out.printf("%d 번 글은 삭제되었습니다.\n", id);
 						break;
 					}
 				}
 				if (foundIndex == null) {
 					System.out.println("해당글은 존재하지 않습니다.");
 					continue;
-				} 
+				}
+			}
+			if (command.startsWith("article modify ")) {
+
+				String[] commandBits = command.split(" ");
+
+				int id = Integer.parseInt(commandBits[2]);
+
+				Article foundArticle = null;
+
+				for (int i = 0; i < articles.size(); i++) {
+					Article article = articles.get(i);
+					if (article.id == id) {
+						foundArticle = article;
+					}
+				}
+				if (foundArticle == null) {
+					System.out.println("해당글은 존재하지 않습니다.");
+				} else {
+
+					System.out.print("제목을 입력해 주세요 :");
+					String title = sc.nextLine().trim();
+					System.out.print("내용을 입력해 주세요 :");
+					String body = sc.nextLine().trim();
+
+					foundArticle.title = title;
+					foundArticle.body = body;
+					
+
+				}
+				System.out.printf("%d 번글이 수정되었습니다.\n",id);
 			}
 		}
 	}
