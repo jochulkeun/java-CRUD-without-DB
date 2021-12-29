@@ -15,7 +15,7 @@ public class makeArticle {
 		Scanner sc = new Scanner(System.in);
 
 		int lastArticleId = 0;
-
+		
 		while (true) {
 			String command;
 			System.out.print("명령어)");
@@ -32,7 +32,8 @@ public class makeArticle {
 				System.out.print("내용을 입력해 주세요 :");
 				body = sc.nextLine().trim();
 
-				Article article = new Article(id, title, body, regDate);
+				
+				Article article = new Article(id, title, body, regDate );
 
 				System.out.println(article);
 				articles.add(article);
@@ -41,13 +42,14 @@ public class makeArticle {
 			}
 			if (command.equals("article list")) {
 				if (articles.size() == 0) {
-					System.out.print("게시글이 존재하지 않습니다.");
+					System.out.print("게시글이 존재하지 않습니다.\n");
+					continue;
 				}
-				System.out.println("번호  |   제목");
+				System.out.println("번호  |   제목   | 조회수");
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
 
-					System.out.printf("%d    |  %s\n", article.id, article.title);
+					System.out.printf("%d    |  %s    |%d \n", article.id, article.title,article.Hit);
 				}
 
 			}
@@ -65,14 +67,19 @@ public class makeArticle {
 						foundArticle = article;
 					}
 				}
+				
 				if (foundArticle == null) {
 					System.out.println("해당글은 존재하지 않습니다.");
-				} else {
+				} 
+				
+					foundArticle.increaseHit();
+				
 					System.out.printf("번호 : %s \n", foundArticle.id);
 					System.out.printf("제목 : %s \n", foundArticle.title);
 					System.out.printf("내용 : %s \n", foundArticle.body);
 					System.out.printf("날짜 : %s \n", foundArticle.regDate);
-				}
+					System.out.printf("조회수 : %d \n", foundArticle.Hit);
+				
 			}
 			if (command.startsWith("article delete ")) {
 
@@ -123,10 +130,9 @@ public class makeArticle {
 
 					foundArticle.title = title;
 					foundArticle.body = body;
-					
 
 				}
-				System.out.printf("%d 번글이 수정되었습니다.\n",id);
+				System.out.printf("%d 번글이 수정되었습니다.\n", id);
 			}
 		}
 	}
