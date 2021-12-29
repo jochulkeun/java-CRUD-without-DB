@@ -19,11 +19,12 @@ public class makeArticle {
 		while (true) {
 			String command;
 			System.out.print("명령어)");
-			command = sc.nextLine();
+			command = sc.nextLine().trim();
 
 			if (command.equals("article write")) {
 				int id = lastArticleId + 1;
 				lastArticleId = id;
+				String regDate = Util.getNowDateStr();
 				String title;
 				String body;
 				System.out.print("제목을 입력해 주세요 :");
@@ -31,7 +32,7 @@ public class makeArticle {
 				System.out.print("내용을 입력해 주세요 :");
 				body = sc.nextLine().trim();
 
-				Article article = new Article(id, title, body);
+				Article article = new Article(id, title, body,regDate);
 
 				System.out.println(article);
 				articles.add(article);
@@ -70,6 +71,7 @@ public class makeArticle {
 					System.out.printf("번호 : %s \n", foundArticle.id);
 					System.out.printf("제목 : %s \n", foundArticle.title);
 					System.out.printf("내용 : %s \n", foundArticle.body);
+					System.out.printf("날짜 : %s \n", foundArticle.regDate);
 				}
 			}
 			if (command.startsWith("article delete ")) {
