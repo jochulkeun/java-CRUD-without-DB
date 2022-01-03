@@ -7,23 +7,27 @@ import java.util.Scanner;
 import article.Article.Article;
 
 public class makeArticle {
-
-	public static void main(String[] args) {
-
-		List<Article> articles = new ArrayList<>();
-
+	
+		private static List<Article> articles;
+	
+		static {
+			articles = new ArrayList<>();
+		}
+		public static void main(String[] args) {
+		
+		makeTestData();
+		
 		Scanner sc = new Scanner(System.in);
 
-		int lastArticleId = 0;
 		
 		while (true) {
+			
 			String command;
 			System.out.print("명령어)");
 			command = sc.nextLine().trim();
 
 			if (command.equals("article write")) {
-				int id = lastArticleId + 1;
-				lastArticleId = id;
+				int id = articles.size() + 1;
 				String regDate = Util.getNowDateStr();
 				String title;
 				String body;
@@ -33,7 +37,7 @@ public class makeArticle {
 				body = sc.nextLine().trim();
 
 				
-				Article article = new Article(id, title, body, regDate );
+				Article article = new Article(id, title, body, regDate,0 );
 
 				System.out.println(article);
 				articles.add(article);
@@ -45,11 +49,11 @@ public class makeArticle {
 					System.out.print("게시글이 존재하지 않습니다.\n");
 					continue;
 				}
-				System.out.println("번호  |   제목   | 조회수");
+				System.out.println("번호 | 조회 |제목 ");
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
 
-					System.out.printf("%d    |  %s    |%d \n", article.id, article.title,article.Hit);
+					System.out.printf("%4d|%4d |%s \n", article.id, article.Hit,article.title);
 				}
 
 			}
@@ -135,5 +139,12 @@ public class makeArticle {
 				System.out.printf("%d 번글이 수정되었습니다.\n", id);
 			}
 		}
+	}
+
+	private static void makeTestData() {
+		System.out.println("테스트를 위한 데이터를 생성합니다.");
+		articles.add(new Article(1, Util.getNowDateStr(), "제목1", "내용1", 11));
+		articles.add(new Article(2, Util.getNowDateStr(), "제목2", "내용2", 22));
+		articles.add(new Article(3, Util.getNowDateStr(), "제목3", "내용3", 33));
 	}
 }

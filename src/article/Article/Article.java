@@ -9,6 +9,10 @@ public class Article {
 	public int Hit;
 
 	public Article(int id, String title, String body, String regDate) {
+		this(id, regDate, title, body, 0);
+	}
+
+	public Article(int id, String title, String body, String regDate, int Hit) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
