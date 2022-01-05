@@ -13,7 +13,7 @@ public class App {
 		articles = new ArrayList<>();
 	}
 
-	public  void start() {
+	public void start() {
 		makeTestData();
 
 		Scanner sc = new Scanner(System.in);
@@ -60,14 +60,8 @@ public class App {
 
 				int id = Integer.parseInt(commandBits[2]);
 
-				Article foundArticle = null;
+				Article foundArticle = getArticleById(id);
 
-				for (int i = 0; i < articles.size(); i++) {
-					Article article = articles.get(i);
-					if (article.id == id) {
-						foundArticle = article;
-					}
-				}
 
 				if (foundArticle == null) {
 					System.out.println("해당글은 존재하지 않습니다.");
@@ -88,23 +82,16 @@ public class App {
 
 				int id = Integer.parseInt(commandBits[2]);
 
-				Article foundIndex = null;
+				int foundIndex = getArticleIndexbyId(id);
 
-				for (int i = 0; i < articles.size(); i++) {
-					Article article = articles.get(i);
+				articles.remove(foundIndex);
+				System.out.printf("%d 번 글은 삭제되었습니다.\n", id);
 
-					if (article.id == id) {
-
-						foundIndex = article;
-						articles.remove(foundIndex);
-						System.out.printf("%d 번 글은 삭제되었습니다.\n", id);
-						break;
-					}
-				}
-				if (foundIndex == null) {
+				if (foundIndex == -1) {
 					System.out.println("해당글은 존재하지 않습니다.");
 					continue;
 				}
+
 			}
 			if (command.startsWith("article modify ")) {
 
@@ -112,14 +99,8 @@ public class App {
 
 				int id = Integer.parseInt(commandBits[2]);
 
-				Article foundArticle = null;
+				Article foundArticle = getArticleById(id);
 
-				for (int i = 0; i < articles.size(); i++) {
-					Article article = articles.get(i);
-					if (article.id == id) {
-						foundArticle = article;
-					}
-				}
 				if (foundArticle == null) {
 					System.out.println("해당글은 존재하지 않습니다.");
 				} else {
@@ -136,6 +117,44 @@ public class App {
 				System.out.printf("%d 번글이 수정되었습니다.\n", id);
 			}
 		}
+	}
+
+	private int getArticleIndexbyId(int id) {
+		int i = 0;
+
+		for (Article article : articles) {
+
+			if (article.id == id) {
+				System.out.printf("article.id의 값:%d\n",article.id);
+				System.out.printf("id의 값:%d\n",id);
+				System.out.printf("i의 값1:%d\n",i);
+				return i;
+				
+			}
+			System.out.printf("i의 값2:%d\n",i);
+			i++;
+		}
+
+		return -1;
+	}
+
+	private Article getArticleById(int id) {
+
+//		for (int i = 0; i < articles.size(); i++) {
+//			Article article = articles.get(i);
+//
+//			if (article.id == id) {
+//				return article;
+//			}
+//		}
+
+		int index = getArticleIndexbyId(id);
+
+		if (index != -1) {
+			return articles.get(index);
+		}
+
+		return null;
 	}
 
 	private static void makeTestData() {
